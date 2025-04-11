@@ -1,16 +1,17 @@
 package com.svgs;
 
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 public class GroceryListController {
 
     @FXML
-    private TextField allRecipesLabel;
+    private Label allRecipesLabel;
 
     @FXML
     private ImageView blueNoPromptBackground;
@@ -31,7 +32,7 @@ public class GroceryListController {
     private ImageView greenSuggestedRecipesBackground;
 
     @FXML
-    private TextField groceryListLabel;
+    private Label groceryListLabel;
 
     @FXML
     private Label ingredientsAndPricesLabel;
@@ -55,7 +56,7 @@ public class GroceryListController {
     private ImageView pinkPromptBackground;
 
     @FXML
-    private TextField promptTitleLabel;
+    private Label promptTitleLabel;
 
     @FXML
     private Label questionLabel;
@@ -97,10 +98,10 @@ public class GroceryListController {
     private Label suggestedRecipeStepsLabel;
 
     @FXML
-    private TextField suggestedRecipesLabel;
+    private Label suggestedRecipesLabel;
 
     @FXML
-    private TextField titleLabel;
+    private Label titleLabel;
 
     @FXML
     private Label totalPriceLabel;
@@ -113,6 +114,19 @@ public class GroceryListController {
 
     @FXML
     private Label yesLabel;
+
+    @FXML
+    private int counter;
+  /*  @FXML
+    private int unsureCounter;
+    @FXML
+    private int yesCounter;
+    @FXML
+    private int noCounter;
+    @FXML
+    private int maybeCounter; */
+    @FXML
+    private ArrayList<Integer> questionCounter;
 
     @FXML void initialize(){
         startingBackground.setVisible(true);
@@ -151,27 +165,75 @@ public class GroceryListController {
         yellowFinalRecipeBackground.setVisible(false);
         yesLabel.setVisible(false);
         allRecipesLabel.setVisible(false);
-
+        questionCounter = new ArrayList<Integer>(); //will set up with {0,1,2,3} for question numbers
+        questionCounter.add(0);
+        questionCounter.add(1);
+        questionCounter.add(2);
+        questionCounter.add(3);
     }
 
     @FXML
-    void clickedButtonD(ActionEvent event) {
-
+    void clickedButtonD(ActionEvent event) { //unsure //q0 budget, q1 cook time, q2 health, q3 portion size, will be 9
+      //  unsureCounter = unsureCounter+1;
+        if(counter==0){
+            questionCounter.add(1,9);
+        } else if(counter==1){
+            questionCounter.add(2,9);
+        } else if(counter==2){
+            questionCounter.add(3,9);
+        } else {
+            questionCounter.add(9);
+        }
+        counter++;
+        cycleQuestions();
     }
 
     @FXML
-    void clickedButtonA(ActionEvent event) {
-
+    void clickedButtonA(ActionEvent event) { //yes, will be 6
+      //  yesCounter = yesCounter+1;
+      if(counter==0){
+        questionCounter.add(1,6);
+    } else if(counter==1){
+        questionCounter.add(2,6);
+    } else if(counter==2){
+        questionCounter.add(3,6);
+    } else {
+        questionCounter.add(6);
+    }
+        counter++;
+        cycleQuestions();
     }
 
     @FXML
-    void clickedButtonB(ActionEvent event) {
-
+    void clickedButtonB(ActionEvent event) { //no, will be 7
+      //  noCounter = noCounter+1;
+      if(counter==0){
+        questionCounter.add(1,7);
+    } else if(counter==1){
+        questionCounter.add(2,7);
+    } else if(counter==2){
+        questionCounter.add(3,7);
+    } else {
+        questionCounter.add(7);
+    }
+        counter++;
+        cycleQuestions();
     }
 
     @FXML
-    void clickedButtonC(ActionEvent event) {
-
+    void clickedButtonC(ActionEvent event) { //maybe, will be 8
+      //  maybeCounter = maybeCounter+1;
+      if(counter==0){
+        questionCounter.add(1,8);
+    } else if(counter==1){
+        questionCounter.add(2,8);
+    } else if(counter==2){
+        questionCounter.add(3,8);
+    } else {
+        questionCounter.add(8);
+    }
+        counter++;
+        cycleQuestions();
     }
 
     @FXML
@@ -223,6 +285,39 @@ public class GroceryListController {
         maybeLabel.setVisible(true);
         buttonD.setVisible(true);
         unsureLabel.setVisible(true);
+
+        cycleQuestions();
     }
 
+    @FXML
+    void cycleQuestions(){
+        if(counter==0){
+            questionLabel.setText("Are you working with a tight food budget this week?");
+        } else if(counter==1){
+            questionLabel.setText("Do you have time to cook meals most days this week?");
+        } else if(counter==2){
+            questionLabel.setText("Are you aiming to eat healthier this week?");
+        } else if(counter==3){
+            questionLabel.setText("Are you feeding others, like family or roomates, this week?");
+        } else {
+            counter=0;
+            pinkPromptBackground.setVisible(false);
+            promptTitleLabel.setVisible(false);
+            questionLabel.setVisible(false);
+            buttonA.setVisible(false);
+            yesLabel.setVisible(false);
+            buttonB.setVisible(false);
+            noLabel.setVisible(false);
+            buttonC.setVisible(false);
+            maybeLabel.setVisible(false);
+            buttonD.setVisible(false);
+            unsureLabel.setVisible(false);
+            greenSuggestedRecipesBackground.setVisible(true);
+            suggestedRecipesLabel.setVisible(true);
+            suggestedRecipeIngredientsLabel.setVisible(true);
+            nextSuggestedRecipeButton.setVisible(true);
+            suggestedRecipeStepsLabel.setVisible(true);
+            suggestedRecipeNameLabel.setVisible(true);
+        }
+    }
 }
