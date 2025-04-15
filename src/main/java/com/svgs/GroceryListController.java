@@ -1,5 +1,9 @@
 package com.svgs;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
@@ -117,16 +121,15 @@ public class GroceryListController {
 
     @FXML
     private int counter;
-  /*  @FXML
-    private int unsureCounter;
-    @FXML
-    private int yesCounter;
-    @FXML
-    private int noCounter;
-    @FXML
-    private int maybeCounter; */
+  
     @FXML
     private ArrayList<Integer> questionCounter;
+
+    @FXML 
+    private int suggestedRecipeCounter;
+
+    @FXML
+    private String [] recipeText;
 
     @FXML void initialize(){
         startingBackground.setVisible(true);
@@ -243,6 +246,28 @@ public class GroceryListController {
 
     @FXML
     void clickedNextSuggestedRecipeButton(ActionEvent event) {
+        if(suggestedRecipeCounter==1){
+            suggestedRecipeNameLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[0]);
+            suggestedRecipeStepsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[1]);
+            suggestedRecipeIngredientsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[2]);
+            suggestedRecipeCounter++;
+        } else if(suggestedRecipeCounter==2){
+            suggestedRecipeNameLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[0]);
+            suggestedRecipeStepsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[1]);
+            suggestedRecipeIngredientsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[2]);
+            suggestedRecipeCounter++;
+        } else if(suggestedRecipeCounter==3){
+            suggestedRecipeNameLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[0]);
+            suggestedRecipeStepsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[1]);
+            suggestedRecipeIngredientsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[2]);
+            suggestedRecipeCounter++;
+        } else {
+            suggestedRecipeNameLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[0]);
+            suggestedRecipeStepsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[1]);
+            suggestedRecipeIngredientsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[2]);
+            suggestedRecipeCounter=0;
+            cycleRecipes();
+        }
 
     }
 
@@ -318,6 +343,32 @@ public class GroceryListController {
             nextSuggestedRecipeButton.setVisible(true);
             suggestedRecipeStepsLabel.setVisible(true);
             suggestedRecipeNameLabel.setVisible(true);
+            cycleRecipes();
         }
+    }
+
+    @FXML
+    void cycleRecipes(){
+        File recipes = new File("src\\main\\resources\\com\\svgs\\recipes.txt");
+        
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader(recipes));
+            String allData = "";
+            while(reader.ready()) {
+                allData += reader.readLine()+"\n";
+            }
+            recipeText = allData.split("\\*\\*\\*");
+            
+          //  System.out.println(recipeText[2].split("\\*")[2]);
+            reader.close();    
+
+            suggestedRecipeNameLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[0]);
+            suggestedRecipeStepsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[1]);
+            suggestedRecipeIngredientsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[2]);
+            suggestedRecipeCounter++;
+
+        } catch(Exception e){
+            System.out.println(e);
+    } 
     }
 }

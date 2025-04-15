@@ -109,7 +109,7 @@
             <Font name="High Tower Text" size="20.0" />
          </font>
       </Button>
-      <Label fx:id="recipeStepsLabel" layoutX="275.0" layoutY="119.0" prefHeight="178.0" prefWidth="407.0" wrapText="true">
+      <Label fx:id="recipeStepsLabel" layoutX="304.0" layoutY="119.0" prefHeight="178.0" prefWidth="378.0" wrapText="true">
          <font>
             <Font name="High Tower Text" size="20.0" />
          </font>
@@ -139,7 +139,7 @@
             <Font name="High Tower Text" size="30.0" />
          </font>
       </Label>
-      <Label fx:id="suggestedRecipeIngredientsLabel" layoutX="44.0" layoutY="114.0" prefHeight="255.0" prefWidth="231.0" wrapText="true">
+      <Label fx:id="suggestedRecipeIngredientsLabel" alignment="TOP_LEFT" layoutX="44.0" layoutY="114.0" prefHeight="255.0" prefWidth="231.0" wrapText="true">
          <font>
             <Font name="High Tower Text" size="20.0" />
          </font>
@@ -149,14 +149,14 @@
             <Font name="High Tower Text" size="20.0" />
          </font>
       </Button>
-      <Label fx:id="suggestedRecipeStepsLabel" layoutX="275.0" layoutY="119.0" prefHeight="178.0" prefWidth="407.0" wrapText="true">
+      <Label fx:id="suggestedRecipeStepsLabel" alignment="TOP_LEFT" layoutX="304.0" layoutY="119.0" prefHeight="178.0" prefWidth="378.0" wrapText="true">
          <font>
             <Font name="High Tower Text Italic" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="suggestedRecipeNameLabel" layoutX="282.0" layoutY="319.0" prefHeight="45.0" prefWidth="248.0" wrapText="true">
+      <Label fx:id="suggestedRecipeNameLabel" layoutX="277.0" layoutY="310.0" prefHeight="45.0" prefWidth="253.0" wrapText="true">
          <font>
-            <Font name="High Tower Text" size="20.0" />
+            <Font name="High Tower Text" size="15.0" />
          </font>
       </Label>
       <ImageView fx:id="yellowFinalRecipeBackground" fitHeight="402.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.34588623046875" AnchorPane.topAnchor="0.6666666666666856">

@@ -1,0 +1,19 @@
+Recipe1*
+Steps1, Steps2*
+Ingredients1, Ingredients2, Ingredients3***
+
+Recipe2*
+Steps1, Steps2, Steps3*
+Ingredients1, Ingredients2***
+
+Recipe3*
+Steps1*
+Ingredients1***
+
+Recipe4*
+Steps4*
+Ingredients4***
+
+Recipe5*
+Steps5*
+Ingredients5***
