@@ -129,6 +129,12 @@ public class GroceryListController {
     private int suggestedRecipeCounter;
 
     @FXML
+    private int recipeCounter;
+
+    @FXML
+    private Button groceryListButton;
+
+    @FXML
     private String [] recipeText;
 
     @FXML void initialize(){
@@ -168,6 +174,7 @@ public class GroceryListController {
         yellowFinalRecipeBackground.setVisible(false);
         yesLabel.setVisible(false);
         allRecipesLabel.setVisible(false);
+        groceryListButton.setVisible(false);
         questionCounter = new ArrayList<Integer>(); //will set up with {0,1,2,3} for question numbers
         questionCounter.add(0);
         questionCounter.add(1);
@@ -240,34 +247,100 @@ public class GroceryListController {
     }
 
     @FXML
-    void clickedNextRecipeButton(ActionEvent event) {
+    void clickedGroceryListButton(ActionEvent event) {
+        blueNoPromptBackground.setVisible(false);
+        allRecipesLabel.setVisible(false);
+        selectFiveLabel.setVisible(false);
+        recipeIngredientsLabel.setVisible(false);
+        nextRecipeButton.setVisible(false);
+        recipeStepsLabel.setVisible(false);
+        selectRecipeButton.setVisible(false);
+        recipeNameLabel.setVisible(false);
+        numberOfSelectedLabel.setVisible(false);
+        groceryListButton.setVisible(true);
+        yellowFinalRecipeBackground.setVisible(true);
+        returnHomeButton.setVisible(true);
+        ingredientsAndPricesLabel.setVisible(true);
+        totalPriceLabel.setVisible(true);
+        groceryListLabel.setVisible(true);
+    }
+
+    @FXML
+    void clickedReturnHomeButton(ActionEvent event){
+        startingBackground.setVisible(true);
+        titleLabel.setVisible(true);
+        startWithPromptsButton.setVisible(true);
+        startWithoutPromptsButton.setVisible(true);
+        pinkPromptBackground.setVisible(false);
+        blueNoPromptBackground.setVisible(false);
+        buttonA.setVisible(false);
+        buttonB.setVisible(false);
+        buttonC.setVisible(false);
+        buttonD.setVisible(false);
+        greenSuggestedRecipesBackground.setVisible(false);
+        groceryListLabel.setVisible(false);
+        ingredientsAndPricesLabel.setVisible(false);
+        maybeLabel.setVisible(false);
+        nextRecipeButton.setVisible(false);
+        nextSuggestedRecipeButton.setVisible(false);
+        noLabel.setVisible(false);
+        numberOfSelectedLabel.setVisible(false);
+        pinkPromptBackground.setVisible(false);
+        promptTitleLabel.setVisible(false);
+        questionLabel.setVisible(false);
+        recipeIngredientsLabel.setVisible(false);
+        recipeNameLabel.setVisible(false);
+        recipeStepsLabel.setVisible(false);
+        returnHomeButton.setVisible(false);
+        selectFiveLabel.setVisible(false);
+        selectRecipeButton.setVisible(false);
+        suggestedRecipeIngredientsLabel.setVisible(false);
+        suggestedRecipeNameLabel.setVisible(false);
+        suggestedRecipeStepsLabel.setVisible(false);
+        suggestedRecipesLabel.setVisible(false);
+        totalPriceLabel.setVisible(false);
+        unsureLabel.setVisible(false);
+        yellowFinalRecipeBackground.setVisible(false);
+        yesLabel.setVisible(false);
+        allRecipesLabel.setVisible(false);
+        groceryListButton.setVisible(false);
 
     }
 
     @FXML
-    void clickedNextSuggestedRecipeButton(ActionEvent event) {
-        if(suggestedRecipeCounter==1){
-            suggestedRecipeNameLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[0]);
-            suggestedRecipeStepsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[1]);
-            suggestedRecipeIngredientsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[2]);
-            suggestedRecipeCounter++;
-        } else if(suggestedRecipeCounter==2){
-            suggestedRecipeNameLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[0]);
-            suggestedRecipeStepsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[1]);
-            suggestedRecipeIngredientsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[2]);
-            suggestedRecipeCounter++;
-        } else if(suggestedRecipeCounter==3){
-            suggestedRecipeNameLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[0]);
-            suggestedRecipeStepsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[1]);
-            suggestedRecipeIngredientsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[2]);
-            suggestedRecipeCounter++;
+    void clickedNextRecipeButton(ActionEvent event) {
+            recipeNameLabel.setText(recipeText[recipeCounter].split("\\*")[0]);
+            recipeStepsLabel.setText(recipeText[recipeCounter].split("\\*")[1]);
+            String ingredients = "";
+            for(String each:recipeText[recipeCounter].split("\\*")[2].split(",")){
+                ingredients+=each+"\n";
+            }
+            recipeIngredientsLabel.setText(ingredients);
+        if(recipeCounter<=8){
+            recipeCounter++;
         } else {
-            suggestedRecipeNameLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[0]);
-            suggestedRecipeStepsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[1]);
-            suggestedRecipeIngredientsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[2]);
+            recipeCounter=0;
+            cycleRecipes();
+        }
+    }
+
+    @FXML
+    void clickedNextSuggestedRecipeButton(ActionEvent event) {
+        suggestedRecipeNameLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[0]);
+        suggestedRecipeStepsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[1]);
+        String ingredients = "";
+        for(String each : recipeText[suggestedRecipeCounter].split("\\*")[2].split(",")){
+            ingredients+=each + "\n";
+        }
+        suggestedRecipeIngredientsLabel.setText(ingredients);
+
+        if(suggestedRecipeCounter<=6){
+              suggestedRecipeCounter++;
+        } else {
             suggestedRecipeCounter=0;
             cycleRecipes();
         }
+
 
     }
 
@@ -291,6 +364,9 @@ public class GroceryListController {
         selectRecipeButton.setVisible(true);
         recipeNameLabel.setVisible(true);
         numberOfSelectedLabel.setVisible(true);
+
+        cycleRecipes();
+
     }
 
     @FXML
@@ -343,6 +419,7 @@ public class GroceryListController {
             nextSuggestedRecipeButton.setVisible(true);
             suggestedRecipeStepsLabel.setVisible(true);
             suggestedRecipeNameLabel.setVisible(true);
+            groceryListButton.setVisible(true);
             cycleRecipes();
         }
     }
@@ -358,14 +435,30 @@ public class GroceryListController {
                 allData += reader.readLine()+"\n";
             }
             recipeText = allData.split("\\*\\*\\*");
-            
-          //  System.out.println(recipeText[2].split("\\*")[2]);
+
             reader.close();    
 
-            suggestedRecipeNameLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[0]);
-            suggestedRecipeStepsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[1]);
-            suggestedRecipeIngredientsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[2]);
-            suggestedRecipeCounter++;
+            if(greenSuggestedRecipesBackground.isVisible()){
+                suggestedRecipeNameLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[0]);
+                suggestedRecipeStepsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[1]);
+                String ingredients = "";
+                for(String each : recipeText[suggestedRecipeCounter].split("\\*")[2].split(",")){
+                    ingredients+=each + "\n";
+                }
+                suggestedRecipeIngredientsLabel.setText(ingredients);
+                        suggestedRecipeCounter++;
+                    }
+
+            if(blueNoPromptBackground.isVisible()){
+                recipeNameLabel.setText(recipeText[recipeCounter].split("\\*")[0]);
+                recipeStepsLabel.setText(recipeText[recipeCounter].split("\\*")[1]);
+                String ingredients = "";
+            for(String each:recipeText[recipeCounter].split("\\*")[2].split(",")){
+                ingredients+=each+"\n";
+            }
+            recipeIngredientsLabel.setText(ingredients);
+                        recipeCounter++;
+                    }
 
         } catch(Exception e){
             System.out.println(e);
