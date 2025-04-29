@@ -132,10 +132,16 @@ public class GroceryListController {
     private int recipeCounter;
 
     @FXML
+    private int selectedCounter;
+
+    @FXML
     private Button groceryListButton;
 
     @FXML
     private String [] recipeText;
+
+    @FXML
+    private ArrayList<Integer> selectedRecipes;
 
     @FXML void initialize(){
         startingBackground.setVisible(true);
@@ -180,19 +186,20 @@ public class GroceryListController {
         questionCounter.add(1);
         questionCounter.add(2);
         questionCounter.add(3);
+        selectedRecipes = new ArrayList<Integer>();
     }
 
     @FXML
-    void clickedButtonD(ActionEvent event) { //unsure //q0 budget, q1 cook time, q2 health, q3 portion size, will be 9
+    void clickedButtonD(ActionEvent event) { //unsure //q0 budget, q1 cook time, q2 health, q3 portion size, will be 7
       //  unsureCounter = unsureCounter+1;
         if(counter==0){
-            questionCounter.add(1,9);
+            questionCounter.add(1,7);
         } else if(counter==1){
-            questionCounter.add(2,9);
+            questionCounter.add(2,7);
         } else if(counter==2){
-            questionCounter.add(3,9);
+            questionCounter.add(3,7);
         } else {
-            questionCounter.add(9);
+            questionCounter.add(7);
         }
         counter++;
         cycleQuestions();
@@ -231,16 +238,16 @@ public class GroceryListController {
     }
 
     @FXML
-    void clickedButtonC(ActionEvent event) { //maybe, will be 8
+    void clickedButtonC(ActionEvent event) { //maybe, will be 6
       //  maybeCounter = maybeCounter+1;
       if(counter==0){
-        questionCounter.add(1,8);
+        questionCounter.add(1,6);
     } else if(counter==1){
-        questionCounter.add(2,8);
+        questionCounter.add(2,6);
     } else if(counter==2){
-        questionCounter.add(3,8);
+        questionCounter.add(3,6);
     } else {
-        questionCounter.add(8);
+        questionCounter.add(6);
     }
         counter++;
         cycleQuestions();
@@ -304,6 +311,7 @@ public class GroceryListController {
         yesLabel.setVisible(false);
         allRecipesLabel.setVisible(false);
         groceryListButton.setVisible(false);
+        selectedRecipes.clear();
 
     }
 
@@ -316,11 +324,11 @@ public class GroceryListController {
                 ingredients+=each+"\n";
             }
             recipeIngredientsLabel.setText(ingredients);
-        if(recipeCounter<=8){
+   
             recipeCounter++;
-        } else {
+        
+         if(recipeCounter==20){
             recipeCounter=0;
-            cycleRecipes();
         }
     }
 
@@ -334,11 +342,9 @@ public class GroceryListController {
         }
         suggestedRecipeIngredientsLabel.setText(ingredients);
 
-        if(suggestedRecipeCounter<=6){
               suggestedRecipeCounter++;
-        } else {
+        if(suggestedRecipeCounter==20){
             suggestedRecipeCounter=0;
-            cycleRecipes();
         }
 
 
@@ -346,6 +352,29 @@ public class GroceryListController {
 
     @FXML
     void clickedSelectRecipeButton(ActionEvent event) {
+        if(selectedCounter!=4){
+        selectedCounter++;
+        numberOfSelectedLabel.setText("Selected: " + selectedCounter);
+        selectedRecipes.add(recipeCounter);
+        } else {
+            numberOfSelectedLabel.setText("Selected: ");
+            selectedCounter=0;
+            blueNoPromptBackground.setVisible(true);
+            allRecipesLabel.setVisible(true);
+            selectFiveLabel.setVisible(true);
+            recipeIngredientsLabel.setVisible(true);
+            nextRecipeButton.setVisible(true);
+            recipeStepsLabel.setVisible(true);
+            selectRecipeButton.setVisible(true);
+            recipeNameLabel.setVisible(true);
+            numberOfSelectedLabel.setVisible(true);
+            groceryListButton.setVisible(true);
+            yellowFinalRecipeBackground.setVisible(true);
+            returnHomeButton.setVisible(true);
+            ingredientsAndPricesLabel.setVisible(true);
+            totalPriceLabel.setVisible(true);
+            groceryListLabel.setVisible(true);
+        }
 
     }
 
@@ -465,3 +494,104 @@ public class GroceryListController {
     } 
     }
 }
+
+/*
+6666 - 5
+6667 - 5
+6676 - 5
+6677 - 5
+6766 - 5
+6767 - 5
+6776 - 5
+6777 - 5
+7666 - 5
+7667 - 5
+7676 - 5
+7677 - 5
+7766 - 5
+7767 - 5
+7776 - 5
+7777 - 5
+
+  chicken ceasar salad: 6,7,6,6
+                        6,7,6,7
+                        6,6,6,7
+  chicken broccoli rice casserole: 6,6,6,6
+                                   6,6,7,6
+  baked feta pasta: 6,6,7,6
+                    6,6,6,6
+                    6,6,6,7
+                    6,6,7,7
+  shrimp quesadilla: 6,7,7,6
+                     6,7,7,7
+                     6,7,6,6
+                     6,6,6,7
+                     6,6,7,6
+                     6,6,7,7
+                     6,7,6,7
+                     7,7,7,7
+  chicken spinach pasta: 7,6,7,6
+                         7,6,7,7
+                         7,7,6,6
+                         7,7,6,7
+                         7,7,7,6
+                         7,7,7,7
+  slow-cooker spareribs: 7,7,6,6
+                         7,6,6,6
+                         7,6,6,7
+                         7,6,7,6
+                         7,6,7,7
+                         7,7,6,7
+                         7,7,7,6
+  rosemary salmon and veggies: 7,7,6,7
+                               7,7,6,6
+  shrimp with orzo and feta: 7,7,6,6
+                             7,6,6,6
+                             7,6,6,7
+                             7,7,6,7
+  easy beef and noodles: 7,7,7,7
+  greek chicken and rice: 7,6,6,6
+                          7,6,6,7
+  smoked sausage and pasta: 7,7,7,6
+                            6,7,7,6
+                            6,7,7,7
+  pork chops with parmesan sauce: 7,6,6,6
+                                  7,6,6,7
+  shrimp noodle bowls: 6,7,6,7
+                       6,6,6,7
+                       6,6,7,7
+                       6,7,6,6
+                       6,7,7,6
+                       6,7,7,7
+  ravioli lasagna: 7,6,7,6
+                   7,6,7,7
+                   7,7,7,6
+                   7,7,7,7
+  mom's spanish rice: 6,7,6,6 
+                      6,6,6,6
+                      6,6,7,6
+                      6,6,7,7
+                      6,7,6,7
+                      6,7,7,6
+                      6,7,7,7
+  salsa verde chicken casserole: 7,6,7,6
+                                 7,6,7,7
+                                 7,7,7,6
+                                 7,7,7,7
+  broiled chicken and artichokes: 7,7,6,6
+                                  6,7,6,6
+                                  7,6,6,6
+                                  7,6,6,7
+                                  7,7,6,7
+  skillet chicken tortellini alfredo: 7,6,7,6
+                                      7,6,7,7
+  egg roll in a bowl: 6,6,6,6
+                      6,6,6,7
+                      6,6,7,6
+                      6,6,7,7
+                      6,7,6,7
+                      6,7,7,6
+                      6,7,7,7
+  roasted cauliflower soup: 6,6,6,6
+
+*/
