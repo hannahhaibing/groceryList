@@ -3,7 +3,6 @@ package com.svgs;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
@@ -125,6 +124,9 @@ public class GroceryListController {
     @FXML
     private ArrayList<Integer> questionCounter;
 
+    @FXML
+    private ArrayList<Integer> suggestedIngredientsIndex;
+
     @FXML 
     private int suggestedRecipeCounter;
 
@@ -181,23 +183,19 @@ public class GroceryListController {
         yesLabel.setVisible(false);
         allRecipesLabel.setVisible(false);
         groceryListButton.setVisible(false);
-        questionCounter = new ArrayList<Integer>(); //will set up with {0,1,2,3} for question numbers
-        questionCounter.add(0);
-        questionCounter.add(1);
-        questionCounter.add(2);
-        questionCounter.add(3);
+         questionCounter = new ArrayList<Integer>(); //will set up
         selectedRecipes = new ArrayList<Integer>();
+        suggestedIngredientsIndex = new ArrayList<>();
     }
 
     @FXML
     void clickedButtonD(ActionEvent event) { //unsure //q0 budget, q1 cook time, q2 health, q3 portion size, will be 7
-      //  unsureCounter = unsureCounter+1;
         if(counter==0){
-            questionCounter.add(1,7);
+            questionCounter.add(7);
         } else if(counter==1){
-            questionCounter.add(2,7);
+            questionCounter.add(7);
         } else if(counter==2){
-            questionCounter.add(3,7);
+            questionCounter.add(7);
         } else {
             questionCounter.add(7);
         }
@@ -207,13 +205,12 @@ public class GroceryListController {
 
     @FXML
     void clickedButtonA(ActionEvent event) { //yes, will be 6
-      //  yesCounter = yesCounter+1;
       if(counter==0){
-        questionCounter.add(1,6);
+        questionCounter.add(6);
     } else if(counter==1){
-        questionCounter.add(2,6);
+        questionCounter.add(6);
     } else if(counter==2){
-        questionCounter.add(3,6);
+        questionCounter.add(6);
     } else {
         questionCounter.add(6);
     }
@@ -223,13 +220,12 @@ public class GroceryListController {
 
     @FXML
     void clickedButtonB(ActionEvent event) { //no, will be 7
-      //  noCounter = noCounter+1;
       if(counter==0){
-        questionCounter.add(1,7);
+        questionCounter.add(7);
     } else if(counter==1){
-        questionCounter.add(2,7);
+        questionCounter.add(7);
     } else if(counter==2){
-        questionCounter.add(3,7);
+        questionCounter.add(7);
     } else {
         questionCounter.add(7);
     }
@@ -239,13 +235,12 @@ public class GroceryListController {
 
     @FXML
     void clickedButtonC(ActionEvent event) { //maybe, will be 6
-      //  maybeCounter = maybeCounter+1;
       if(counter==0){
-        questionCounter.add(1,6);
+        questionCounter.add(6);
     } else if(counter==1){
-        questionCounter.add(2,6);
+        questionCounter.add(6);
     } else if(counter==2){
-        questionCounter.add(3,6);
+        questionCounter.add(6);
     } else {
         questionCounter.add(6);
     }
@@ -270,6 +265,12 @@ public class GroceryListController {
         ingredientsAndPricesLabel.setVisible(true);
         totalPriceLabel.setVisible(true);
         groceryListLabel.setVisible(true);
+
+        String ingredients = "";
+                for(String each : recipeText[suggestedIngredientsIndex.get(0)].split("\\*")[2].split(",")){
+                    ingredients+=each + "\n";
+                }
+        ingredientsAndPricesLabel.setText(ingredients);
     }
 
     @FXML
@@ -312,6 +313,8 @@ public class GroceryListController {
         allRecipesLabel.setVisible(false);
         groceryListButton.setVisible(false);
         selectedRecipes.clear();
+        questionCounter.clear();
+        suggestedIngredientsIndex.clear();
 
     }
 
@@ -345,7 +348,8 @@ public class GroceryListController {
               suggestedRecipeCounter++;
         if(suggestedRecipeCounter==20){
             suggestedRecipeCounter=0;
-        }
+        } 
+        cycleRecipes();
 
 
     }
@@ -468,6 +472,16 @@ public class GroceryListController {
             reader.close();    
 
             if(greenSuggestedRecipesBackground.isVisible()){
+                String selections = questionCounter.get(0).toString() + questionCounter.get(1).toString() + questionCounter.get(2).toString() + questionCounter.get(3).toString();
+                if(recipeText[suggestedRecipeCounter].split("\\*")[3].indexOf(selections)==-1){
+                    suggestedRecipeCounter++;
+                    if(suggestedRecipeCounter==20){
+                        suggestedRecipeCounter=0;
+                    } 
+                        cycleRecipes();
+                    return;
+                }
+                suggestedIngredientsIndex.add(suggestedRecipeCounter);
                 suggestedRecipeNameLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[0]);
                 suggestedRecipeStepsLabel.setText(recipeText[suggestedRecipeCounter].split("\\*")[1]);
                 String ingredients = "";
@@ -475,8 +489,7 @@ public class GroceryListController {
                     ingredients+=each + "\n";
                 }
                 suggestedRecipeIngredientsLabel.setText(ingredients);
-                        suggestedRecipeCounter++;
-                    }
+                }
 
             if(blueNoPromptBackground.isVisible()){
                 recipeNameLabel.setText(recipeText[recipeCounter].split("\\*")[0]);
