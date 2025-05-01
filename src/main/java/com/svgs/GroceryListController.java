@@ -107,10 +107,16 @@ public class GroceryListController {
     private Label titleLabel;
 
     @FXML
+    private Label groceryRecipeNameLabel;
+
+    @FXML
     private Label totalPriceLabel;
 
     @FXML
     private Label unsureLabel;
+
+    @FXML
+    private Label tPrice;
 
     @FXML
     private ImageView yellowFinalRecipeBackground;
@@ -137,10 +143,22 @@ public class GroceryListController {
     private int selectedCounter;
 
     @FXML
+    private int groceryListCounter;
+
+    @FXML
     private Button groceryListButton;
 
     @FXML
+    private Button nextListButton;
+
+    @FXML
     private String [] recipeText;
+
+    @FXML
+    private String [] ingredientList;
+
+    @FXML
+    private String [] costList;
 
     @FXML
     private ArrayList<Integer> selectedRecipes;
@@ -177,26 +195,25 @@ public class GroceryListController {
         suggestedRecipeNameLabel.setVisible(false);
         suggestedRecipeStepsLabel.setVisible(false);
         suggestedRecipesLabel.setVisible(false);
-        totalPriceLabel.setVisible(false);
+        groceryRecipeNameLabel.setVisible(false);
         unsureLabel.setVisible(false);
         yellowFinalRecipeBackground.setVisible(false);
         yesLabel.setVisible(false);
         allRecipesLabel.setVisible(false);
         groceryListButton.setVisible(false);
-         questionCounter = new ArrayList<Integer>(); //will set up
+        totalPriceLabel.setVisible(false);
+        nextListButton.setVisible(false);
+        tPrice.setVisible(false);
+        questionCounter = new ArrayList<Integer>(); //will set up
         selectedRecipes = new ArrayList<Integer>();
         suggestedIngredientsIndex = new ArrayList<>();
+        ingredientList = new String [0];
+        costList = new String [0];
     }
 
     @FXML
     void clickedButtonD(ActionEvent event) { //unsure //q0 budget, q1 cook time, q2 health, q3 portion size, will be 7
-        if(counter==0){
-            questionCounter.add(7);
-        } else if(counter==1){
-            questionCounter.add(7);
-        } else if(counter==2){
-            questionCounter.add(7);
-        } else {
+        if(counter==0 || counter==1 || counter==2 || counter==3){
             questionCounter.add(7);
         }
         counter++;
@@ -205,45 +222,27 @@ public class GroceryListController {
 
     @FXML
     void clickedButtonA(ActionEvent event) { //yes, will be 6
-      if(counter==0){
-        questionCounter.add(6);
-    } else if(counter==1){
-        questionCounter.add(6);
-    } else if(counter==2){
-        questionCounter.add(6);
-    } else {
-        questionCounter.add(6);
-    }
+        if(counter==0 || counter==1 || counter==2 || counter==3){
+            questionCounter.add(6);
+        }
         counter++;
         cycleQuestions();
     }
 
     @FXML
     void clickedButtonB(ActionEvent event) { //no, will be 7
-      if(counter==0){
-        questionCounter.add(7);
-    } else if(counter==1){
-        questionCounter.add(7);
-    } else if(counter==2){
-        questionCounter.add(7);
-    } else {
-        questionCounter.add(7);
-    }
+        if(counter==0 || counter==1 || counter==2 || counter==3){
+            questionCounter.add(7);
+        }
         counter++;
         cycleQuestions();
     }
 
     @FXML
     void clickedButtonC(ActionEvent event) { //maybe, will be 6
-      if(counter==0){
-        questionCounter.add(6);
-    } else if(counter==1){
-        questionCounter.add(6);
-    } else if(counter==2){
-        questionCounter.add(6);
-    } else {
-        questionCounter.add(6);
-    }
+        if(counter==0 || counter==1 || counter==2 || counter==3){
+            questionCounter.add(6);
+        }
         counter++;
         cycleQuestions();
     }
@@ -263,14 +262,59 @@ public class GroceryListController {
         yellowFinalRecipeBackground.setVisible(true);
         returnHomeButton.setVisible(true);
         ingredientsAndPricesLabel.setVisible(true);
-        totalPriceLabel.setVisible(true);
+        groceryRecipeNameLabel.setVisible(true);
         groceryListLabel.setVisible(true);
+        totalPriceLabel.setVisible(true);
+        nextListButton.setVisible(true);
+        tPrice.setVisible(true);
 
+        if(selectedRecipes==null || selectedRecipes.isEmpty()){
         String ingredients = "";
-                for(String each : recipeText[suggestedIngredientsIndex.get(0)].split("\\*")[2].split(",")){
-                    ingredients+=each + "\n";
-                }
+        ingredientList = recipeText[suggestedIngredientsIndex.get(groceryListCounter)].split("\\*")[2].split(",");
+        costList = recipeText[suggestedIngredientsIndex.get(groceryListCounter)].split("\\*")[4].split(",");
+
+            for(int i = 0; i<ingredientList.length && i < costList.length; i++){
+                ingredients+= ingredientList[i].trim() + ": $"+ costList[i].trim() + "\n";
+            }
         ingredientsAndPricesLabel.setText(ingredients);
+        totalPriceLabel.setText(recipeText[suggestedIngredientsIndex.get(groceryListCounter)].split("\\*")[5]);
+        groceryRecipeNameLabel.setText(recipeText[suggestedIngredientsIndex.get(groceryListCounter)].split("\\*")[0]);
+        groceryListCounter++;
+        }
+    }
+
+    @FXML
+    void clickedNextListButton(ActionEvent event){
+        if(selectedRecipes==null || selectedRecipes.isEmpty()){
+        if(groceryListCounter>=suggestedIngredientsIndex.size()){
+            groceryListCounter = 0;
+        }
+        String ingredients = "";
+        ingredientList = recipeText[suggestedIngredientsIndex.get(groceryListCounter)].split("\\*")[2].split(",");
+        costList = recipeText[suggestedIngredientsIndex.get(groceryListCounter)].split("\\*")[4].split(",");
+            for(int i = 0; i<ingredientList.length && i < costList.length; i++){
+                ingredients+= ingredientList[i].trim() + ": $"+ costList[i].trim() + "\n";
+            }
+        ingredientsAndPricesLabel.setText(ingredients);
+        totalPriceLabel.setText(recipeText[suggestedIngredientsIndex.get(groceryListCounter)].split("\\*")[5]);
+        groceryRecipeNameLabel.setText(recipeText[suggestedIngredientsIndex.get(groceryListCounter)].split("\\*")[0]);
+        groceryListCounter++;
+        } else {
+            if(groceryListCounter>=selectedRecipes.size()){
+                groceryListCounter = 0;
+            }
+            String ingredients = "";
+        ingredientList = recipeText[selectedRecipes.get(groceryListCounter)].split("\\*")[2].split(",");
+        costList = recipeText[selectedRecipes.get(groceryListCounter)].split("\\*")[4].split(",");
+
+            for(int i = 0; i<ingredientList.length && i < costList.length; i++){
+                ingredients+= ingredientList[i].trim() + ": $"+ costList[i].trim() + "\n";
+            }
+        ingredientsAndPricesLabel.setText(ingredients);
+        totalPriceLabel.setText(recipeText[selectedRecipes.get(groceryListCounter)].split("\\*")[5]);
+        groceryRecipeNameLabel.setText(recipeText[selectedRecipes.get(groceryListCounter)].split("\\*")[0]);
+        groceryListCounter++;
+        }
     }
 
     @FXML
@@ -306,16 +350,20 @@ public class GroceryListController {
         suggestedRecipeNameLabel.setVisible(false);
         suggestedRecipeStepsLabel.setVisible(false);
         suggestedRecipesLabel.setVisible(false);
-        totalPriceLabel.setVisible(false);
+        groceryRecipeNameLabel.setVisible(false);
         unsureLabel.setVisible(false);
+        tPrice.setVisible(false);
         yellowFinalRecipeBackground.setVisible(false);
         yesLabel.setVisible(false);
         allRecipesLabel.setVisible(false);
         groceryListButton.setVisible(false);
+        nextListButton.setVisible(false);
+        totalPriceLabel.setVisible(false);
         selectedRecipes.clear();
         questionCounter.clear();
         suggestedIngredientsIndex.clear();
-
+        ingredientList = new String [0];
+        costList = new String [0];
     }
 
     @FXML
@@ -376,8 +424,22 @@ public class GroceryListController {
             yellowFinalRecipeBackground.setVisible(true);
             returnHomeButton.setVisible(true);
             ingredientsAndPricesLabel.setVisible(true);
-            totalPriceLabel.setVisible(true);
+            groceryRecipeNameLabel.setVisible(true);
             groceryListLabel.setVisible(true);
+            totalPriceLabel.setVisible(true);
+            nextListButton.setVisible(true);
+            tPrice.setVisible(true);
+            String ingredients = "";
+        ingredientList = recipeText[selectedRecipes.get(groceryListCounter)].split("\\*")[2].split(",");
+        costList = recipeText[selectedRecipes.get(groceryListCounter)].split("\\*")[4].split(",");
+
+            for(int i = 0; i<ingredientList.length && i < costList.length; i++){
+                ingredients+= ingredientList[i].trim() + ": $"+ costList[i].trim() + "\n";
+            }
+        ingredientsAndPricesLabel.setText(ingredients);
+        totalPriceLabel.setText(recipeText[selectedRecipes.get(groceryListCounter)].split("\\*")[5]);
+        groceryRecipeNameLabel.setText(recipeText[selectedRecipes.get(groceryListCounter)].split("\\*")[0]);
+        groceryListCounter++;
         }
 
     }
@@ -492,6 +554,7 @@ public class GroceryListController {
                 }
 
             if(blueNoPromptBackground.isVisible()){
+                selectedRecipes.add(recipeCounter);
                 recipeNameLabel.setText(recipeText[recipeCounter].split("\\*")[0]);
                 recipeStepsLabel.setText(recipeText[recipeCounter].split("\\*")[1]);
                 String ingredients = "";

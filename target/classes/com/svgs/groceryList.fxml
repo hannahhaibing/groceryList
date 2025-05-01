@@ -174,7 +174,7 @@
             <Font name="High Tower Text" size="20.0" />
          </font>
       </Button>
-      <Label fx:id="ingredientsAndPricesLabel" layoutX="21.0" layoutY="76.0" prefHeight="247.0" prefWidth="672.0" wrapText="true">
+      <Label fx:id="ingredientsAndPricesLabel" layoutX="50.0" layoutY="76.0" prefHeight="247.0" prefWidth="616.0" wrapText="true">
          <font>
             <Font name="High Tower Text" size="14.0" />
          </font>
@@ -184,9 +184,24 @@
             <Font name="High Tower Text" size="30.0" />
          </font>
       </Label>
-      <Label fx:id="totalPriceLabel" layoutX="37.0" layoutY="329.0" prefHeight="45.0" prefWidth="305.0" wrapText="true">
+      <Label fx:id="groceryRecipeNameLabel" layoutX="37.0" layoutY="329.0" prefHeight="45.0" prefWidth="305.0" wrapText="true">
          <font>
             <Font name="High Tower Text" size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="nextListButton" layoutX="373.0" layoutY="333.0" mnemonicParsing="false" onAction="#clickedNextListButton" text="Next List">
+         <font>
+            <Font name="High Tower Text" size="20.0" />
+         </font>
+      </Button>
+      <Label fx:id="tPrice" layoutX="561.0" layoutY="23.0" prefHeight="37.0" prefWidth="107.0" text="Total Price:">
+         <font>
+            <Font name="High Tower Text" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="totalPriceLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="557.0" layoutY="13.0" prefHeight="89.0" prefWidth="107.0">
+         <font>
+            <Font name="High Tower Text" size="20.0" />
          </font>
       </Label>
    </children>
